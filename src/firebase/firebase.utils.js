@@ -22,7 +22,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   const snapShot = await userRef.get()
   const collectionSnapshot = await collectionRef.get()
-  console.log({ collection: collectionSnapshot.docs.map(doc => doc.data()) })
   if (!snapShot.exists) {
     const { displayName, email } = userAuth
     const createdAt = new Date()
@@ -43,7 +42,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
-  console.log(collectionRef);
 
   const batch = firestore.batch();
   objectsToAdd.forEach(obj => {
@@ -56,7 +54,6 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 }
 
 export const convertCollectionsSnapshotToMap = (collections) => {
-  console.log(collections);
   const transformedCollection = collections.docs.map(doc => {
     const { title, items } = doc.data();
     return {
@@ -67,7 +64,6 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     }
   });
 
-  console.log(transformedCollection);
   return transformedCollection.reduce((accumulator, collection)=>{
      accumulator[collection.title.toLowerCase()] = collection;
      return accumulator;
